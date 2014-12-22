@@ -242,6 +242,11 @@ Devise.setup do |config|
   ln_credentials=YAML.load_file(ln_file)[Rails.env].symbolize_keys
   config.omniauth :linkedin, ln_credentials[:APP_ID], ln_credentials[:APP_SECRET]
 
+  require "omniauth-twitter"
+  tr_file=File.join(Rails.root,'config','twitter_credentials.yml')
+  tr_credentials=YAML.load_file(tr_file)[Rails.env].symbolize_keys
+  config.omniauth :twitter, tr_credentials[:APP_ID], tr_credentials[:APP_SECRET]
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to Practice_App, <%= @to %></h1>
+    <p>
+      HI <%=@user%>
+      <br>
+    </p>
+    <p><%= link_to "Activate", activate_twitter_user_url(@token,email: @to) %>
+ </body>
+</html>

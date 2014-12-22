@@ -29,4 +29,16 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         end
 	end
 
+    def twitter
+        data = session["devise.omniauth_data"] = User.build_twitter_auth_cookie_hash(request.env["omniauth.auth"])
+        user = User.find_for_twitter_oauth(data)
+        if user.class == User
+            flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Twitter"
+            sign_in_and_redirect user, :event => :authentication
+          else
+            flash[:error] = "You must add an email to complete your registration."
+            @user = user
+            render "users/add_email"
+          end
+      end
 end

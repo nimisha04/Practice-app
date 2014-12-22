@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 	# Include default devise modules. Others available are:
 	# :confirmable, :lockable, :timeoutable and :omniauthable
 	devise :database_authenticatable, :registerable,
-	         :recoverable, :rememberable, :trackable, :validatable,:omniauthable,:omniauth_providers => [:facebook, :linkedin]
+	         :recoverable, :rememberable, :trackable, :validatable,:omniauthable,:omniauth_providers => [:facebook, :linkedin, :twitter]
 
 	validates :username, presence: true
 
@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 	    
 	    user = User.where(:provider => auth.provider, :uid => auth.uid).first
 	    if user
-	      puts "user has signed up/logged in from facebook on the site"
+	      puts "user has signed up/logged in fromw facebook on the site"
 	      return user
 	    else
 	    	registered_user = User.where(:email => auth.info.email).first
@@ -57,4 +57,28 @@ class User < ActiveRecord::Base
 	      	end
 	    end    
 	end
+
+	
+	def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
+	    user = User.where(:twitter_provider => auth[:provider], :twitter_uid => auth[:uid]).first
+	    if user
+	      puts "user exist in local database and already signup from twitter"
+	      return user
+	    else
+	      user = TwitterUser.new(:uid=>auth[:uid],:provider=>auth[:provider],
+	       :username=>auth[:username]+rand(100000..999999).to_s
+	      )
+	      user.save!
+	      user
+	    end
+	  end
+
+	def self.build_twitter_auth_cookie_hash data
+		{
+		  :provider => data.provider, :uid => data.uid,
+		  :access_token => data.credentials.token, :access_secret => data.credentials.secret,
+		  :username => data.extra.raw_info.screen_name,
+		}
+	end
+
 end

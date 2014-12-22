@@ -1,0 +1,5 @@
+<%=form_for @user, as: "user", url: create_email_for_twitter_path, method: :post do |f|%>
+	<%=f.label :email%>
+	<%=f.text_field :email, class: 'form-control'%>
+	<%=f.submit "Register", class: "btn btn-primary"%>
+<%end%>

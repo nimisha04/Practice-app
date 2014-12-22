@@ -4,6 +4,9 @@
 	    <%=link_to image_tag("facebook_login.png"), user_omniauth_authorize_path(:facebook) %>
 	    <br>
 	    <%=link_to image_tag("linkedin_login.jpg"), user_omniauth_authorize_path(:linkedin) %>
+	    <br>
+	    <%= link_to image_tag("twitter_login.png"), user_omniauth_authorize_path(:twitter) %>
+
 	</div>
   <div class="col-md-6">
 		<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>

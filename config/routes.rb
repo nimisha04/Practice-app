@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   # get 'welcome/index'
 
@@ -7,6 +9,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  match "create_email_for_twitter"=> "users#create_email_for_twitter", via: [:post]
+  match '/twitter/:signature'=>"welcome#activate_twitter_user", via: [:get], as: 'activate_twitter_user'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
