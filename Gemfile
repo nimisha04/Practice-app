@@ -47,4 +47,4 @@ gem 'omniauth-twitter'
 gem 'ransack',             github: 'ernie/ransack'
 gem 'inherited_resources', github: 'josevalim/inherited_resources'
 gem 'formtastic',          github: 'justinfrench/formtastic'
-
+gem 'rails_12factor'
