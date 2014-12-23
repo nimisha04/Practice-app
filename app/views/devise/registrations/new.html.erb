@@ -26,6 +26,9 @@
         <div><%= f.label :password_confirmation %><br />
           <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %></div>
           <br>
+          <div><%= f.label :image_url %><br />
+        <%= f.text_field :image_url, autofocus: true, class: 'form-control' %></div>
+        <br>
         <div><%= f.submit "Sign up", class: "btn btn-primary" %></div>
       <% end %>
       <div class="col-md-12">

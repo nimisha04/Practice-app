@@ -4,7 +4,7 @@
     <nav>
       <ul class="nav navbar-nav pull-right">
         <li><%= link_to "Home", root_path %></li>
-        <% if signed_in? %>
+        <% if current_user %>
           
           
           <li class="dropdown">

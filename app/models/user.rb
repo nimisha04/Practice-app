@@ -15,7 +15,11 @@ class User < ActiveRecord::Base
 	    else
 	    	registered_user = User.where(:email => auth.info.email).first
 	    	if registered_user
-	        	registered_user.update_attributes(provider:auth.provider,uid:auth.uid)
+	    		if registered_user.image_url.blank? && auth.info.image.present?
+	    			registered_user.update_attributes(provider:auth.provider,uid:auth.uid,image_url:auth.info.image)
+	    		else
+	        		registered_user.update_attributes(provider:auth.provider,uid:auth.uid)
+	        	end
 	        	puts "user found locally and also found on facebook, so user is already registered to site with signup"
 	        	return registered_user        
 	      	else
@@ -24,7 +28,8 @@ class User < ActiveRecord::Base
 				provider:auth.provider,
 				uid:auth.uid,
 				email:auth.info.email,
-				password:Devise.friendly_token[0,20]
+				password:Devise.friendly_token[0,20],
+				image_url: auth.info.image
 				)
 				puts "user created"
 				return user
@@ -33,7 +38,6 @@ class User < ActiveRecord::Base
 	end
 
 	def self.find_for_linkedin_oauth(auth)
-	    
 	    user = User.where(:provider => auth.provider, :uid => auth.uid).first
 	    if user
 	      puts "user has signed up/logged in from linkedin on the site"
@@ -41,7 +45,11 @@ class User < ActiveRecord::Base
 	    else
 	    	registered_user = User.where(:email => auth.info.email).first
 	    	if registered_user
-	        	registered_user.update_attributes(provider:auth.provider,uid:auth.uid)
+	    		if registered_user.image_url.blank? && auth.info.image.present?
+	    			registered_user.update_attributes(provider:auth.provider,uid:auth.uid,image_url:auth.info.image)
+	    		else
+	        		registered_user.update_attributes(provider:auth.provider,uid:auth.uid)
+	        	end
 	        	puts "user found locally and also found on linkedin, so user is already registered to site with signup"
 	        	return registered_user        
 	      	else
@@ -50,7 +58,8 @@ class User < ActiveRecord::Base
 				provider:auth.provider,
 				uid:auth.uid,
 				email:auth.info.email,
-				password:Devise.friendly_token[0,20]
+				password:Devise.friendly_token[0,20],
+				image_url: auth.info.image
 				)
 				puts "user created"
 				return user
